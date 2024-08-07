@@ -1,10 +1,10 @@
 /*
  * pipeline input parameters
  */
-params.reads = "$projectDir/data/ggal/gut_{1,2}.fq"
+params.reads = "$projectDir/data/ggal/*_{1,2}.fq"
 params.transcriptome_file = "$projectDir/data/ggal/transcriptome.fa"
 params.multiqc = "$projectDir/multiqc"
-params.outdir = "results"
+params.outdir = "$projectDir/results"
 
 log.info """\
     R N A S E Q - N F   P I P E L I N E
@@ -33,6 +33,9 @@ process INDEX {
 }
 
 process QUANTIFICATION {
+    tag "$sample_id"
+    publishDir "${params.outdir}", mode:"copy"
+
     input:
     path salmon_index
     tuple val(sample_id), path(reads)
