@@ -1,6 +1,13 @@
 params.reads = "$projectDir/data/ggal/gut_{1,2}.fq"
-params.transcriptome_file = "$projectDir/data/ggal/transcriptome.fa"
+params.transcriptome = "$projectDir/data/ggal/transcriptome.fa"
 params.multiqc = "$projectDir/multiqc"
-params.test = "test_variable"
+params.outdir = "$baseDir/results"
 
-println "reads: $params.reads"
+log.info """\
+              T E S T - P I P E L I N E    
+         ===================================
+         transcriptome: ${params.transcriptome}
+         reads        : ${params.reads}
+         outdir       : ${params.outdir}
+         """
+         .stripIndent()

@@ -1,3 +1,4 @@
+nextflow.enable.dsl=2
 /*
  * pipeline input parameters
  */
@@ -14,12 +15,14 @@ log.info """\
     outdir       : ${params.outdir}
     """
     .stripIndent(true)
-
-/*
+    /*
  * define the `INDEX` process that creates a binary index
  * given the transcriptome file
  */
 process INDEX {
+
+    cpus 2
+
     input:
     path transcriptome
 
@@ -33,5 +36,8 @@ process INDEX {
 }
 
 workflow {
-    index_ch = INDEX(params.transcriptome_file)
+    transcriptome_file = file(params.transcriptome_file)
+    
+    index_ch = INDEX(transcriptome_file)
+    index_ch.view()
 }
