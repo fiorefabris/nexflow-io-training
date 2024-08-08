@@ -1,0 +1,36 @@
+export SINGULARITY_TMPDIR=/u/area/ffabris/scratch/ff_nxf_training/tmp
+export NXF_SINGULARITY_CACHEDIR=/u/area/ffabris/scratch/ff_nxf_training/tmp
+
+nextflow.enable.dsl=2
+cleanup=false
+
+singularity {
+    enabled = true 
+    singularity.envWhitelist = ["SINGULARITY_TMPDIR"]
+    runOptions =  '--bind $SINGULARITY_TMPDIR:/tmp'
+}
+
+process {
+   executor='slurm'
+   queue='THIN'
+   errorStrategy = 'finish'
+}
+
+process {
+    withName: 'INDEX' {
+        container = 'https://depot.galaxyproject.org/singularity/salmon:1.5.2--h84f40af_0'
+        errorStrategy = 'finish'
+    }
+
+    withName: 'QUANTIFICATION' {
+        container = 'https://depot.galaxyproject.org/singularity/salmon:1.5.2--h84f40af_0'
+        errorStrategy = 'finish'
+    }    
+    
+
+    withName: 'FASTQC' {
+        container = 'library://pditommaso/rnaseq-nf/latest.sif:latest'
+        errorStrategy = 'finish'
+    }      
+
+}

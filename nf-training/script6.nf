@@ -90,3 +90,5 @@ workflow {
     fastqc_ch = FASTQC(read_pairs_ch)
     MULTIQC(quant_ch.mix(fastqc_ch).collect())
 }
+
+

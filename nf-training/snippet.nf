@@ -1,2 +1,5 @@
-ch = Channel.of("1","2","3")
-ch.view() 
+params.dataPath = "$projectDir/data/ggal/*.fq"
+
+Channel
+    .fromPath(params.dataPath,hidden:true)
+    .view() 
